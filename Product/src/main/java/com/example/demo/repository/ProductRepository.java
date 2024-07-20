@@ -1,4 +1,5 @@
 package com.example.demo.repository;
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,28 +12,26 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 import com.example.demo.model.Product;
 
-
 @Repository
-public class ProductRepository  {
-	
-	@Autowired
+public class ProductRepository {
+
+    @Autowired
     private JdbcTemplate jdbcTemplate;
 
     public List<Product> findAll() {
-    	
-    	
+
         String sql = "SELECT * FROM products";
         return jdbcTemplate.query(sql, BeanPropertyRowMapper.newInstance(Product.class));
     }
 
     public Product findById(Integer productId) {
-    	try {
-    		String sql = "SELECT * FROM products WHERE product_id = ?";
+        try {
+            String sql = "SELECT * FROM products WHERE product_id = ?";
             return jdbcTemplate.queryForObject(sql, BeanPropertyRowMapper.newInstance(Product.class), productId);
         } catch (Exception e) {
             return null;
         }
-        
+
     }
 
     public List<Product> findByCategory(Integer categoryId) {
@@ -42,25 +41,27 @@ public class ProductRepository  {
 
     public int save(Product product) {
         String sql = "INSERT INTO products (name, description, price, quantity, image_url, category_id, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
-        return jdbcTemplate.update(sql, product.getName(), product.getDescription(), product.getPrice(), product.getQuantity(), product.getImageUrl(), product.getCategoryId(), product.getCreatedAt(), product.getUpdatedAt());
+        return jdbcTemplate.update(sql, product.getName(), product.getDescription(), product.getPrice(),
+                product.getQuantity(), product.getImageUrl(), product.getCategoryId(), product.getCreatedAt(),
+                product.getUpdatedAt());
     }
 
     public void deleteById(Integer productId) {
         String sql = "DELETE FROM products WHERE product_id = ?";
         jdbcTemplate.update(sql, productId);
     }
-    
+
     public int update(Product product) {
-		String sql = "UPDATE products SET name=?, description=?, price=?, quantity=?, image_url=?, category_id=?, updated_at=? WHERE product_id = ?;";
-		return jdbcTemplate.update(sql,
-		           product.getName(),
-		           product.getDescription(),
-		           product.getPrice(),
-		           product.getQuantity(),
-		           product.getImageUrl(),
-		           product.getCategoryId(),
-		           product.getUpdatedAt(),
-		           product.getProductId());
-	}
-	
+        String sql = "UPDATE products SET name=?, description=?, price=?, quantity=?, image_url=?, category_id=?, updated_at=? WHERE product_id = ?;";
+        return jdbcTemplate.update(sql,
+                product.getName(),
+                product.getDescription(),
+                product.getPrice(),
+                product.getQuantity(),
+                product.getImageUrl(),
+                product.getCategoryId(),
+                product.getUpdatedAt(),
+                product.getProductId());
+    }
+
 }

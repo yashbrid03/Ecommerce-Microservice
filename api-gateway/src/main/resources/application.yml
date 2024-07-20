@@ -1,0 +1,45 @@
+spring:
+ cloud:
+   gateway:
+     routes:
+       - id: cart-service
+         uri: lb://CART-SERVICE
+         predicates:
+           - Path=/cart/**
+         filters:
+           - AuthenticationFilter
+
+
+       - id: order-service
+         uri: lb://ORDER-SERVICE
+         predicates:
+           - Path=/order/**
+         filters:
+           - AuthenticationFilter
+
+       - id: product-service
+         uri: lb://PRODUCT-SERVICE
+         predicates:
+           - Path=/product/**
+         filters:
+           - AuthenticationFilter
+
+       - id: rating-service
+         uri: lb://RATING-SERVICE
+         predicates:
+           - Path=/rating/**
+         filters:
+           - AuthenticationFilter
+
+
+       - id: user-service
+         uri: lb://USER-SERVICE
+         predicates:
+           - Path=/user/**
+         filters:
+           - AuthenticationFilter
+
+       - id: identity-service
+         uri: lb://IDENTITY-SERVICE
+         predicates:
+           - Path=/auth/**

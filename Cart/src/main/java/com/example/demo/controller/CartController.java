@@ -25,36 +25,35 @@ import com.example.demo.service.CartService;
 @RestController
 @RequestMapping("/cart")
 public class CartController {
-	
+
 	@Autowired
 	private CartItemRepository cartItemRepository;
-	
+
 	@Autowired
 	private CartRepository cartRepository;
-	
+
 	@Autowired
 	private CartService cartService;
-	
+
 	private static final Logger logger = LoggerFactory.getLogger(CartController.class);
-	
-	
+
 	@PostMapping("/{userId}")
-	public ResponseEntity<String> postCall(@PathVariable Integer userId,@RequestBody CartItem cartItem) {
-		return cartService.addToCart(userId, cartItem);		
+	public ResponseEntity<String> postCall(@PathVariable Integer userId, @RequestBody CartItem cartItem) {
+		return cartService.addToCart(userId, cartItem);
 	}
-	
+
 	@GetMapping("/{userId}")
-	public ResponseEntity<List<CartItem>> getCall(@PathVariable Integer userId){
+	public ResponseEntity<List<CartItem>> getCall(@PathVariable Integer userId) {
 		return cartService.getCartItem(userId);
 	}
-	
+
 	@PutMapping("/{userId}")
-	public ResponseEntity<String> putCall(@PathVariable Integer userId, @RequestBody CartItem cartItem){
+	public ResponseEntity<String> putCall(@PathVariable Integer userId, @RequestBody CartItem cartItem) {
 		return cartService.updateCartItem(userId, cartItem);
 	}
-	
+
 	@DeleteMapping("/{userId}")
-	public ResponseEntity<String> deleteCall(@PathVariable Integer userId, @RequestBody Integer cartItemId){
+	public ResponseEntity<String> deleteCall(@PathVariable Integer userId, @RequestBody Integer cartItemId) {
 		return cartService.removeItemFromCart(userId, cartItemId);
 	}
 
